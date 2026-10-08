@@ -10,4 +10,4 @@ git pull --ff-only origin "$BRANCH"
 docker compose up -d --build
 docker image prune -f >/dev/null
 sleep 3
-curl -fsS -o /dev/null -w "health: %{http_code}\n" http://127.0.0.1:3000/id
+curl -fsS -o /dev/null -w "health: %{http_code}\n" http://127.0.0.1:3010/id

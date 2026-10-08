@@ -44,11 +44,21 @@ See `docs/google-apps-script.gs`. Paste it into a Sheet's Apps Script, set the `
 
 ## Deploy to a VPS (Docker)
 
+**Quick (no domain, review on port 8080).** Run as root on the VPS. It's idempotent, so re-run it to update:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/WassupXes/Website/claude/amazing-hopper-u1rz7c/deploy/vps-install.sh | bash
+```
+
+It installs Docker and nginx if they're missing, runs the app on `127.0.0.1:3010` and serves it at `http://<ip>:8080`. Existing sites on 80/443 are not touched.
+
+**With a domain:**
+
 ```bash
 # on the VPS (Docker + nginx installed)
 git clone https://github.com/WassupXes/Website.git /opt/ternakin && cd /opt/ternakin
 cp .env.example .env && nano .env
-./deploy/deploy.sh main                 # builds & runs on 127.0.0.1:3000
+./deploy/deploy.sh main                 # builds & runs on 127.0.0.1:3010
 sudo cp deploy/nginx.conf /etc/nginx/sites-available/ternakin
 sudo ln -s /etc/nginx/sites-available/ternakin /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
